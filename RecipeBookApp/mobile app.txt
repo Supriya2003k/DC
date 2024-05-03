@@ -1,0 +1,159 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { RadioButton } from 'react-native-paper';
+
+export default function App() {
+  const [showRecipe, setShowRecipe] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [isToggled, setIsToggled] = useState(false);
+
+  const recipes = [
+    { name: 'Pasta Carbonara', ingredients: 'Spaghetti, eggs, bacon, parmesan cheese, black pepper', type: 'Dinner' },
+    { name: 'Chicken Curry', ingredients: 'Chicken, onion, garlic, ginger, tomato, coconut milk, spices', type: 'Lunch' },
+    { name: 'Chocolate Cake', ingredients: 'Flour, sugar, cocoa powder, eggs, milk, butter', type: 'Dessert' },
+    { name: 'Caprese Salad', ingredients: 'Tomatoes, mozzarella cheese, basil leaves, olive oil, balsamic vinegar', type: 'Lunch' },
+    { name: 'Vegetable Stir-Fry', ingredients: 'Assorted vegetables, soy sauce, garlic, ginger, vegetable oil', type: 'Dinner' },
+    { name: 'Grilled Salmon', ingredients: 'Salmon fillets, lemon, olive oil, garlic, salt, pepper', type: 'Dinner' },
+    { name: 'Banana Bread', ingredients: 'Bananas, flour, sugar, eggs, butter, baking powder', type: 'Breakfast' }
+  ];
+
+  const toggleRecipe = (index) => {
+    setShowRecipe(showRecipe === index ? null : index);
+  };
+
+  const toggleButton = () => {
+    setIsToggled(!isToggled);
+    setSelectedOption('');
+    setShowRecipe(null);
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
+        <Ionicons name="menu" size={24} color="#000" style={styles.icon} />
+        <Text style={styles.heading}>Recipe Book App</Text>
+        <Ionicons name="home" size={24} color="#000" style={styles.icon} />
+      </View>
+      <TouchableOpacity style={styles.toggleButton} onPress={toggleButton}>
+        <Text style={styles.toggleButtonText}>{isToggled ? 'Hide Recipes' : 'Show All Recipes'}</Text>
+      </TouchableOpacity>
+      {isToggled && (
+        <View style={styles.radioContainer}>
+          <View style={styles.radioButtonContainer}>
+            <RadioButton
+              value="Breakfast"
+              status={selectedOption === 'Breakfast' ? 'checked' : 'unchecked'}
+              onPress={() => setSelectedOption('Breakfast')}
+            />
+            <Text style={styles.radioText}>Breakfast</Text>
+          </View>
+          <View style={styles.radioButtonContainer}>
+            <RadioButton
+              value="Lunch"
+              status={selectedOption === 'Lunch' ? 'checked' : 'unchecked'}
+              onPress={() => setSelectedOption('Lunch')}
+            />
+            <Text style={styles.radioText}>Lunch</Text>
+          </View>
+          <View style={styles.radioButtonContainer}>
+            <RadioButton
+              value="Dinner"
+              status={selectedOption === 'Dinner' ? 'checked' : 'unchecked'}
+              onPress={() => setSelectedOption('Dinner')}
+            />
+            <Text style={styles.radioText}>Dinner</Text>
+          </View>
+          <View style={styles.radioButtonContainer}>
+            <RadioButton
+              value="Dessert"
+              status={selectedOption === 'Dessert' ? 'checked' : 'unchecked'}
+              onPress={() => setSelectedOption('Dessert')}
+            />
+            <Text style={styles.radioText}>Dessert</Text>
+          </View>
+        </View>
+      )}
+      {recipes.map((recipe, index) => (
+        (!isToggled || selectedOption === '' || recipe.type === selectedOption) && (
+          <TouchableOpacity key={index} onPress={() => toggleRecipe(index)}>
+            <View style={styles.recipeContainer}>
+              <Text style={styles.recipeName}>{recipe.name}</Text>
+              {showRecipe === index && (
+                <Text style={styles.ingredients}>{recipe.ingredients}</Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        )
+      ))}
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    backgroundColor: '#ecf0f1',
+    padding: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  heading: {
+    marginTop: 30,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#8E44AD',
+  },
+  icon: {
+    marginTop: 20,
+    padding: 5,
+  },
+  recipeContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  recipeName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#3498db',
+  },
+  ingredients: {
+    fontSize: 16,
+    color: '#333',
+  },
+  radioContainer: {
+    marginBottom: 10,
+  },
+  radioButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  radioText: {
+    marginLeft: 5,
+  },
+  toggleButton: {
+    backgroundColor: '#3498db',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  toggleButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+});
