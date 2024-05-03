@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Check</title>
+    <script>
+        function checkAge() {
+            var name = document.getElementById('name').value;
+            var age = parseInt(document.getElementById('age').value);
+
+            if (isNaN(age)) {
+                alert('Please enter a valid age.');
+                return;
+            }
+
+            var message;
+
+            if (age < 18) {
+                message = 'Hello ' + name + ', you are not authorized to visit the site';
+            } else {
+                message = 'Welcome ' + name + ' to this site';
+            }
+
+            document.getElementById('result').innerText = message;
+        }
+    </script>
+</head>
+<body>
+    <h1>Age Check</h1>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" required><br>
+        <button type="button" onclick="checkAge()">Submit</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Cookies</title>
+</head>
+<body>
+    <h1>List Cookies</h1>
+    <button onclick="listCookies()">List Cookies</button>
+    <ul id="cookieList"></ul>
+
+    <script>
+        function listCookies() {
+            var cookies = document.cookie.split(';');
+            var cookieList = document.getElementById('cookieList');
+            cookieList.innerHTML = '';
+
+            if (cookies.length === 0 || cookies[0].trim() === '') {
+                cookieList.innerHTML = '<li>No cookies found</li>';
+            } else {
+                cookies.forEach(function(cookie) {
+                    var cookieParts = cookie.split('=');
+                    var name = cookieParts[0].trim();
+                    var value = cookieParts.length > 1 ? cookieParts[1].trim() : 'N/A';
+                    var listItem = document.createElement('li');
+                    listItem.textContent = name + ': ' + value;
+                    cookieList.appendChild(listItem);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

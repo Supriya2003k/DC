@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Page</title>
+    <style>
+        .timestamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Form -->
+<div id="loginForm">
+    <form id="nameForm">
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" name="name">
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+</div>
+
+<!-- Hello Page -->
+<div id="helloPage" style="display: none;">
+    <h1 id="helloMsg"></h1>
+    <div id="startTime" class="timestamp"></div>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<!-- Logout Page -->
+<div id="logoutPage" style="display: none;">
+    <h1 id="logoutMsg"></h1>
+    <p id="usageDuration"></p>
+</div>
+
+<script>
+    var startTime;
+
+    function submitForm() {
+        var name = document.getElementById('name').value;
+        if (name.trim() !== '') {
+            startTime = new Date();
+            document.getElementById('helloMsg').innerHTML = 'Hello ' + name;
+            document.getElementById('startTime').innerHTML = 'Start Time: ' + startTime.toLocaleString();
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('helloPage').style.display = 'block';
+        }
+    }
+
+    function logout() {
+        var endTime = new Date();
+        var duration = (endTime - startTime) / 1000; // in seconds
+        var name = document.getElementById('name').value;
+        document.getElementById('logoutMsg').innerHTML = 'Thank You, ' + name + '!';
+        document.getElementById('usageDuration').innerHTML = 'You used this application for ' + duration + ' seconds.';
+        document.getElementById('helloPage').style.display = 'none';
+        document.getElementById('logoutPage').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

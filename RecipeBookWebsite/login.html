@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Recipe Book Login</title>
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg?auto=compress&cs=tinysrgb&w=600'); /* Replace 'path_to_your_image.jpg' with the path to your image file */
+      background-size: cover; /* This ensures that the background image covers the entire viewport */
+      background-position: center; /* This centers the background image */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+  }
+
+.login-box {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 320px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333333;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #666666;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #106409;
+}
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>Recipe Book Login</h2>
+  <form id="registrationForm">
+    <div class="input-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+      <span id="nameError" class="error"></span>
+    </div>
+
+    <div class="input-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+      <span id="emailError" class="error"></span>
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <span id="passwordError" class="error"></span>
+    </div>
+
+    <input type="submit" value="Login">
+  </form>
+</div>
+
+<script>
+document.getElementById("registrationForm").addEventListener("submit", function(event) {
+  let isValid = true;
+
+  // Validate Name
+const name = document.getElementById("name").value;
+const namePattern = /^[A-Za-z][A-Za-z0-9]*$/; // Regular expression to match the required pattern
+
+if (!name) {
+    document.getElementById("nameError").innerText = "Name is required";
+    isValid = false;
+} else if (!namePattern.test(name)) {
+    document.getElementById("nameError").innerText = "Invalid name format. Start with an alphabet, no special characters.Numbers allowed except at the beginning.";
+    isValid = false;
+} else {
+    document.getElementById("nameError").innerText = "";
+}
+
+  // Validate Email
+  const email = document.getElementById("email").value;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!emailRegex.test(email)) {
+    document.getElementById("emailError").innerText = "Invalid email format";
+    isValid = false;
+  } else {
+    document.getElementById("emailError").innerText = "";
+  }
+
+  // Validate Password
+const password = document.getElementById("password").value;
+
+// Regular expression to check for a strong password with a mix of characters
+const strongPasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{6,}$/;
+
+if (password.length < 6) {
+    document.getElementById("passwordError").innerText = "Password must be at least 6 characters";
+    isValid = false;
+} else if (!strongPasswordPattern.test(password)) {
+    document.getElementById("passwordError").innerText = "Password should contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+    isValid = false;
+} else {
+    document.getElementById("passwordError").innerText = "";
+}
+
+  if (isValid) {
+    // Save the user's login status in localStorage
+    localStorage.setItem("isLoggedIn", "true");
+    // Redirect to the recipe book page after successful validation
+    window.location.href = "recipe 4.html";
+
+  } else {
+    event.preventDefault(); // Prevent form submission if validation fails
+  }
+});
+</script>
+
+</body>
+</html>

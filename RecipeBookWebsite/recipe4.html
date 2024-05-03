@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Recipe Book App</title>
+  <style>
+    /* 1. Outline */
+    .recipe-card {
+        outline: 2px solid #111111;
+      }
+    
+  /* Hamburger icon styling */
+  .icon {
+    display: none; /* Hide by default on larger screens */
+  }
+
+  /* Responsive design - show/hide the navigation links */
+  @media screen and (max-width: 768px) {
+    .navbar a:not(:first-child) {display: none;}
+    .navbar a.icon {
+      float: right;
+      display: block;
+    }
+  } 
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    header {
+      background-color: #05080f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin: 20px;
+    }
+
+    .recipe-card {
+      width: 300px;
+      margin: 20px;
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h2 {
+      color: #eb0d0d;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3f93e2;
+      color: white;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #050505;
+      width: 80%;
+    }
+
+    .close {
+      color: #f10707;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+<body>
+  <header>
+    <h1>RECIPE BOOK</h1>
+    <!-- Dropdown list for selecting recipes -->
+    <select id="recipeSelector" onchange="displaySelectedRecipe()">
+      <option value="none">Select a Recipe</option>
+      <option value="recipe1">Spaghetti Bolognese</option>
+      <option value="recipe2">Chicken Caesar Salad</option>
+      <option value="recipe3">Homemade Pizza</option>
+    </select>
+  </header>
+
+  <section id="recipeSection">
+    <div class="recipe-card" id="recipe1">
+      <h2>Spaghetti Bolognese</h2>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_To-Iy-6g5fjUfFRJSd5jbdwicUV0TpA74Q&usqp=CAU" alt="Spaghetti Bolognese">
+      <h6><a href="https://tribuneonlineng.com/nutritious-spaghetti-bolognese/" target="_blank">About</a></h6>
+      <ul>
+        <li>Ground beef</li>
+        <li>Tomato sauce</li>
+        <li>Onions</li>
+        <li>Garlic</li>
+        <li>Spaghetti</li>
+      </ul>
+      <button class="button" onclick="showRecipe('recipe1')">View Recipe</button>
+      <button class="button" onclick="playVideo('spaghetti_bolognese.mp4')">
+        <i class="fa-solid fa-video"></i> View Video
+      </button>
+    </div>
+
+    <div class="recipe-card" id="recipe2">
+      <h2>Chicken Caesar Salad</h2>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6KuPCsWpDcDW82tuqZnrCNsymdWMXEYFzcg&usqp=CAU" alt="Chicken Caesar Salad">
+      <h6><a href="https://mokasusa.com/why-chicken-caesar-salads-are-healthy/" target="_blank">About</a></h6>
+      <ul>
+        <li>Grilled chicken breast</li>
+        <li>Romaine lettuce</li>
+        <li>Croutons</li>
+        <li>Caesar dressing</li>
+      </ul>
+      <button class="button" onclick="showRecipe('recipe2')">View Recipe</button>
+      <button class="button" onclick="playVideo('chicken_caesar_salad.mp4')">
+        <i class="fa-solid fa-video"></i> View Video
+      </button>
+    </div>
+
+    <div class="recipe-card" id="recipe3">
+      <h2>Homemade Pizza</h2>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaL5RHcK_uaMwPjJLi-KIoSQlCKd38eXxBzg&usqp=CAU" alt="Homemade Pizza">
+      <h6><a href="https://www.healthline.com/nutrition/is-pizza-healthy" target="_blank">About</a></h6>
+      <ul>
+        <li>Dough</li>
+        <li>Tomato sauce</li>
+        <li>Cheese</li>
+        <li>Pepperoni</li>
+      </ul>
+      <button class="button" onclick="showRecipe('recipe3')">View Recipe</button>
+      <button class="button" onclick="playVideo('homemade_pizza.mp4')">
+        <i class="fa-solid fa-video"></i> View Video
+      </button>
+    </div>
+      
+    <!-- Add more recipe cards as needed -->
+  </section>
+  
+  <section>
+    <table>
+      <tr>
+        <th>Recipe</th>
+        <th>Preparation Time</th>
+        <th>Servings</th>
+      </tr>
+      <tr>
+        <td>Spaghetti Bolognese</td>
+        <td>30 minutes</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>Chicken Caesar Salad</td>
+        <td>20 minutes</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Homemade Pizza</td>
+        <td>50 minutes</td>
+        <td>2</td>
+      </tr>
+      <!-- Add more rows as needed -->
+    </table>
+  </section>
+
+  <!-- Modal for Recipe Details -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <img id="modalImage" alt="Recipe Image">
+      <p id="modalIngredients"><strong>Ingredients:</strong></p>
+      <p id="modalRecipe"><strong>Recipe:</strong></p>
+    </div>
+  </div>
+
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeVideoModal()">&times;</span>
+      <h2 id="videoTitle"></h2>
+      <video id="recipeVideo" width="640" height="360" controls>
+        <!-- Video source will be loaded dynamically -->
+      </video>
+    </div>
+  </div>
+
+  <script>
+    function displaySelectedRecipe() {
+        var selectedRecipe = document.getElementById("recipeSelector").value;
+        var recipeSection = document.getElementById("recipeSection");
+  
+        // Clear existing content in the recipe section
+        recipeSection.innerHTML = "";
+  
+        if (selectedRecipe === "recipe1") {
+            recipeSection.innerHTML += `
+              <div class="recipe-card" id="recipe1">
+                <h2>Spaghetti Bolognese</h2>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_To-Iy-6g5fjUfFRJSd5jbdwicUV0TpA74Q&usqp=CAU" alt="Spaghetti Bolognese">
+                <h6><a href="https://tribuneonlineng.com/nutritious-spaghetti-bolognese/" target="_blank">About</a></h6>
+                <ul>
+                  <li>Ground beef</li>
+                  <li>Tomato sauce</li>
+                  <li>Onions</li>
+                  <li>Garlic</li>
+                  <li>Spaghetti</li>
+                </ul>
+                <button class="button" onclick="showRecipe('recipe1')">View Recipe</button>
+                <button class="button" onclick="playVideo('spaghetti_bolognese.mp4')">
+                  <i class="fa-solid fa-video"></i> View Video
+              </div>
+            `;
+          } else if (selectedRecipe === "recipe2") {
+            recipeSection.innerHTML += `
+              <div class="recipe-card" id="recipe2">
+                <h2>Chicken Caesar Salad</h2>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6KuPCsWpDcDW82tuqZnrCNsymdWMXEYFzcg&usqp=CAU" alt="Chicken Caesar Salad">
+                <h6><a href="https://mokasusa.com/why-chicken-caesar-salads-are-healthy/" target="_blank">About</a></h6>
+                <ul>
+                  <li>Grilled chicken breast</li>
+                  <li>Romaine lettuce</li>
+                  <li>Croutons</li>
+                  <li>Caesar dressing</li>
+                </ul>
+                <button class="button" onclick="showRecipe('recipe2')">View Recipe</button>
+                <button class="button" onclick="playVideo('chicken_caesar_salad.mp4')">
+                  <i class="fa-solid fa-video"></i> View Video
+              </div>
+            `;
+          }
+        else if (selectedRecipe === "recipe3") {
+          // Homemade Pizza recipe card
+          recipeSection.innerHTML += `
+            <div class="recipe-card" id="recipe3">
+              <h2>Homemade Pizza</h2>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaL5RHcK_uaMwPjJLi-KIoSQlCKd38eXxBzg&usqp=CAU" alt="Homemade Pizza">
+              <h6><a href="https://www.healthline.com/nutrition/is-pizza-healthy" target="_blank">About</a></h6>
+              <ul>
+                <li>Dough</li>
+                <li>Tomato sauce</li>
+                <li>Cheese</li>
+                <li>Pepperoni</li>
+              </ul>
+              <button class="button" onclick="showRecipe('recipe3')">View Recipe</button>
+              <button class="button" onclick="playVideo('homemade_pizza.mp4')">
+                <i class="fa-solid fa-video"></i> View Video
+            </div>
+          `;
+        } 
+      }
+    function showRecipe(recipeId) {
+      var modal = document.getElementById("myModal");
+      var recipeTitle = document.getElementById(recipeId).querySelector('h2').innerText;
+      var recipeImage = document.getElementById(recipeId).querySelector('img').src;
+      var recipeIngredients = document.getElementById(recipeId).querySelector('ul').innerHTML;
+    
+
+      var recipeInstructions = "";
+      if (recipeId === "recipe1") {
+        recipeInstructions = "1. In a large pot, cook spaghetti according to package instructions.\n" +
+          "2. In a skillet, brown ground beef over medium heat. Drain excess fat.\n" +
+          "3. Add chopped onions and minced garlic to the skillet. Cook until onions are softened.\n" +
+          "4. Stir in tomato sauce and let it simmer.\n" +
+          "5. Serve the Bolognese sauce over cooked spaghetti.";
+
+      } else if (recipeId === "recipe2") {
+        recipeInstructions = "1. Grill chicken breasts until fully cooked.\n" +
+          "2. Chop Romaine lettuce and place it in a large bowl.\n" +
+          "3. Slice grilled chicken and add it to the bowl.\n" +
+          "4. Toss in croutons.\n" +
+          "5. Drizzle Caesar dressing over the salad and toss until evenly coated.";
+
+      }
+      else if (recipeId === "recipe3") {
+        recipeInstructions = "1. Prepare the pizza dough and let it rise for an hour.\n" +
+          "2. Preheat your oven to 475°F (245°C).\n" +
+          "3. Roll out the dough into your desired pizza shape on a floured surface.\n" +
+          "4. Spread a layer of tomato sauce over the dough.\n" +
+          "5. Sprinkle shredded cheese and arrange your desired toppings, such as pepperoni.\n" +
+          "6. Bake the pizza in the preheated oven for 12-15 minutes or until the crust is golden brown and the cheese is melted.\n" +
+          "7. Remove the pizza from the oven, let it cool for a few minutes, and then slice and serve.";
+      }
+      
+      document.getElementById("modalTitle").innerText = recipeTitle;
+      document.getElementById("modalImage").src = recipeImage;
+      document.getElementById("modalIngredients").innerHTML = "<strong>Ingredients:</strong><br>" + recipeIngredients;
+      document.getElementById("modalRecipe").innerHTML = "<strong>Recipe:</strong><br>" + recipeInstructions.replace(/\n/g, "<br>");
+    
+      modal.style.display = "block";
+
+    }
+    function playVideo(videoFileName) {
+        var videoModal = document.getElementById("videoModal");
+        var videoElement = document.getElementById("recipeVideo");
+        var videoTitleElement = document.getElementById("videoTitle");
+      
+        // Set the video title based on the selected recipe
+        if (videoFileName === "spaghetti_bolognese.mp4") {
+          videoTitleElement.innerText = "Spaghetti Bolognese Video";
+        } else if (videoFileName === "chicken_caesar_salad.mp4") {
+          videoTitleElement.innerText = "Chicken Caesar Salad Video";
+        } else if (videoFileName === "homemade_pizza.mp4") {
+          videoTitleElement.innerText = "Homemade Pizza Video";
+        }
+      
+        // Set the video source and display the modal
+        videoElement.src = "file:///C:/Users/HP/Desktop/SEM 6/APP DEV/pics, videos/" + videoFileName;
+        // Adjust the path based on your directory structure
+        videoModal.style.display = "block"; // Display the modal
+        videoElement.play(); // Play the video
+      }
+      
+      function closeVideoModal() {
+        var videoModal = document.getElementById("videoModal");
+        var videoElement = document.getElementById("recipeVideo");
+      
+        // Hide the modal and pause the video
+        videoModal.style.display = "none";
+        videoElement.pause();
+        videoElement.src = ""; // Reset the video source
+      }
+    
+    function closeModal() {
+      var modal = document.getElementById("myModal");
+      modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      var modal = document.getElementById("myModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
+</body>
+</html>
