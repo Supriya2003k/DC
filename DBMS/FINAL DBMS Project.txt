@@ -1,0 +1,139 @@
+GUEST MANAGEMENT:
+
+CREATE TABLE guest (
+  guest_id NUMBER(10) PRIMARY KEY,
+  first_name VARCHAR2(50),
+  last_name VARCHAR2(50),
+  email VARCHAR2(100),
+  phone_number VARCHAR2(20),
+  address VARCHAR2(200),
+  city VARCHAR2(50),
+  state VARCHAR2(50),
+  country VARCHAR2(50)
+);
+
+INSERT INTO guest (guest_id, first_name, last_name, email, phone_number, address, city, state, country)
+VALUES (1, 'John', 'Doe', 'johndoe@example.com', '555-1234', '123 Main St', 'Anytown', 'CA', 'USA');
+
+INSERT INTO guest (guest_id, first_name, last_name, email, phone_number, address, city, state, country)
+VALUES (2, 'Jane', 'Smith', 'janesmith@example.com', '555-5678', '456 Park Ave', 'Otherville', 'NY', 'USA');
+
+INSERT INTO guest (guest_id, first_name, last_name, email, phone_number, address, city, state, country)
+VALUES (3, 'Bob', 'Johnson', 'bobjohnson@example.com', '555-9012', '789 Elm St', 'Smalltown', 'TX', 'USA');
+
+
+ROOM MANAGEMENT:
+
+CREATE TABLE room (
+  room_number VARCHAR2(10) PRIMARY KEY,
+  room_type VARCHAR2(50),
+  capacity NUMBER(2),
+  price NUMBER(10,2),
+  is_available CHAR(1)
+);
+
+INSERT INTO room (room_number, room_type, capacity, price, is_available)
+VALUES ('101', 'Single', 1, 100.00, 'Y');
+
+INSERT INTO room (room_number, room_type, capacity, price, is_available)
+VALUES ('102', 'Double', 2, 150.00, 'Y');
+
+INSERT INTO room (room_number, room_type, capacity, price, is_available)
+VALUES ('103', 'Suite', 4, 300.00, 'N');
+
+
+RESERVATION MANAGEMENT:
+
+CREATE TABLE reservation (
+  reservation_id NUMBER(10) PRIMARY KEY,
+  guest_id NUMBER(10),
+  room_number VARCHAR2(10),
+  checkin_date DATE,
+  checkout_date DATE,
+  num_of_guests NUMBER(2),
+  total_price NUMBER(10,2),
+  reservation_status VARCHAR2(50),
+  FOREIGN KEY (guest_id) references guest(guest_id) 
+);
+
+INSERT INTO reservation (reservation_id, guest_id, room_number, checkin_date, checkout_date, num_of_guests, total_price, reservation_status)
+VALUES (1, 1, '101', '01-apr-2023', '05-apr-2023', 1, 400.00, 'Confirmed');
+
+INSERT INTO reservation (reservation_id, guest_id, room_number, checkin_date, checkout_date, num_of_guests, total_price, reservation_status)
+VALUES (2, 2, '102', '10-may-2023', '15-may-2023', 2, 900.00, 'Pending');
+
+INSERT INTO reservation (reservation_id, guest_id, room_number, checkin_date, checkout_date, num_of_guests, total_price, reservation_status)
+VALUES (3, 3, '103', '20-jul-2023', '30-jul-2023', 4, 3000.00, 'Cancelled');
+
+CHECK IN AND CHECK OUT MANAGEMENT:
+-- Create the Check-Ins table
+CREATE TABLE CheckIns (
+    CheckInID INT PRIMARY KEY,
+    guest_id number(10) unique,
+    room_number Varchar(10) unique,
+    FOREIGN KEY (guest_id) REFERENCES guest(guest_id),
+    CheckInTime DATE NOT NULL
+);
+
+-- Create the Check-Outs table
+CREATE TABLE CheckOuts (
+    CheckOutID INT PRIMARY KEY,
+    room_number varchar(10) unique,
+    CheckInID INT NOT NULL,
+    CheckOutTime DATE NOT NULL,
+    FOREIGN KEY (CheckInID) REFERENCES CheckIns(CheckInID)
+);
+
+-- Insert a record into the CheckIns table
+INSERT INTO CheckIns (room_number,guest_id,CheckInId, CheckInTime) VALUES ('101',1,1, '22-mar-2023');
+
+-- Insert a record into the CheckOuts table, referencing the CheckIn record
+INSERT INTO CheckOuts (CheckOutId,CheckInID,room_number, CheckOutTime) VALUES (01,1,'101', '22-mar-2023');
+
+
+BILLING AND INVOICE MANAGEMENT:
+
+-- Create table for billing and invoicing management
+CREATE TABLE invoices (
+  invoice_id INT PRIMARY KEY,
+  guest_id NUMBER(10) NOT NULL,
+  invoice_date DATE NOT NULL,
+  due_date DATE NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  status VARCHAR(10) NOT NULL
+);
+
+-- Insert a record into the invoices table
+INSERT INTO invoices (invoice_id, guest_id, invoice_date, due_date, amount, status)
+VALUES (1, 1, '20-MAR-2023', '01-APR-2023', 150.00, 'unpaid');
+
+INVENTORY MANAGEMET:
+
+-- Create table for inventory management system
+CREATE TABLE inventory (
+  item_id INT PRIMARY KEY,
+  item_name VARCHAR(255) NOT NULL,
+  item_description VARCHAR(20),
+  quantity INT NOT NULL,
+  unit_price DECIMAL(10,2) NOT NULL,
+  reorder_level INT NOT NULL
+);
+
+-- Insert a record into the inventory table
+INSERT INTO inventory (item_id, item_name, item_description, quantity, unit_price, reorder_level)
+VALUES (1, 'Laptop', '13-inch MacBook Pro', 10, 1500.00, 2);
+
+
+REPORTING:
+-- Create table for reporting
+CREATE TABLE reports (
+  report_id INT PRIMARY KEY,
+  report_name VARCHAR(255) NOT NULL,
+  report_date DATE NOT NULL,
+  report_content VARCHAR(200)
+);
+y
+-- Insert a record into the reports table
+INSERT INTO reports (report_id, report_name, report_date, report_content)
+VALUES (1, 'Sales Report', '22-MAR-2023', 'Total sales for the month of March: $100,000.');
+

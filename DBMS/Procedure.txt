@@ -1,0 +1,94 @@
+CREATE OR REPLACE PROCEDURE create_reservation AS
+  v_guest_id INTEGER;
+  v_check_in_date DATE;
+  v_check_out_date DATE;
+  v_room_type VARCHAR2(20);
+  v_num_of_guests NUMBER(2);
+  v_num_of_rooms NUMBER(2);
+  v_room_id NUMBER(10);
+BEGIN
+
+  DBMS_OUTPUT.PUT_LINE('Enter guest name: ');
+  ACCEPT v_guest_id INTEGER PROMPT '';
+
+
+  DBMS_OUTPUT.PUT_LINE('Enter check-in date (YYYY-MM-DD): ');
+  ACCEPT v_check_in_date DATE FORMAT 'YYYY-MM-DD' PROMPT '';
+
+
+  DBMS_OUTPUT.PUT_LINE('Enter check-out date (YYYY-MM-DD): ');
+  ACCEPT v_check_out_date DATE FORMAT 'YYYY-MM-DD' PROMPT '';
+
+ 
+  DBMS_OUTPUT.PUT_LINE('Enter room type: ');
+  ACCEPT v_room_type CHAR(20) PROMPT '';
+
+
+  DBMS_OUTPUT.PUT_LINE('Enter number of guests: ');
+  ACCEPT v_num_of_guests NUMBER(2) PROMPT '';
+
+
+  DBMS_OUTPUT.PUT_LINE('Enter number of rooms: ');
+  ACCEPT v_num_of_rooms NUMBER(2) PROMPT '';
+
+
+  SELECT room_id
+  INTO v_room_id
+  FROM rooms
+  WHERE room_type = v_room_type
+    AND check_in_date <= v_check_out_date
+    AND check_out_date >= v_check_in_date
+    AND ROWNUM = 1;
+
+
+  INSERT INTO reservations(reservation_id, guest_name, check_in_date, check_out_date, room_type, num_of_guests, num_of_rooms)
+  VALUES(v_room_id, v_guest_name, v_check_in_date, v_check_out_date, v_room_type, v_num_of_guests, v_num_of_rooms);
+
+
+  UPDATE rooms
+  SET check_in_date = v_check_in_date,
+      check_out_date = v_check_out_date
+  WHERE room_id = v_room_id;
+  
+
+  COMMIT;
+
+  DBMS_OUTPUT.PUT_LINE('Reservation created successfully. Reservation ID: ' || v_room_id);
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+   
+    DBMS_OUTPUT.PUT_LINE('Room type ' || v_room_type || ' is not available for the given dates.');
+END;
+
+
+PROCEDURE 1:
+create or replace procedure customer(i in varchar,n out number)
+is
+begin
+select guest_id into n from reservation where room_number=i;
+end;
+/
+
+PROCEDURE 2:
+create or replace procedure inventory_message(i in varchar, n out decimal)
+is 
+begin
+select unit_price into n from inventory where item_name=i;
+end;
+/
+
+PROCEDURE 3:
+create or replace procedure customers(i in number,n out varchar)
+is 
+begin 
+select r.room_number into n
+from guest g join reservation r on g.guest_id = r.guest_id where r.guest_id=i;
+end;
+/
+
+
+SQL> conn / as sysdba
+Connected.
+SQL> grant create view to scott;
+
+Grant succeeded.
