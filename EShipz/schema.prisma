@@ -1,0 +1,21 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("mongodb+srv://user:passworduser@cluster0.m2l2yjy.mongodb.net/") // Adjust this URL as needed
+}
+
+model Order {
+  id                String     @id @default(auto()) @map("_id")
+  orderID           String     @unique
+  shipper           String
+  product           String
+  AWBNumber         Int
+  shippedVia        String
+  shipmentDate      DateTime
+  expectedDelivery  DateTime
+  status            String
+  actions           String
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
