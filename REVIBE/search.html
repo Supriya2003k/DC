@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="search.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVIBE - E-Waste Recycling Directory</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url("background.jpg");
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 60%;
+            border: none;
+            border-radius: 5px;
+        }
+
+        select {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .facility-list {
+            text-align: left;
+        }
+
+        .facility {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .icons {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* CSS styling remains the same */
+    </style>
+</head>
+<body>
+    <h1>REVIBE</h1>
+    <div class="container">
+        <h2>E-Waste Recycling Directory</h2>
+        <div class="search-container">
+            <select id="Location">
+                <option value="">Search by Location</option>
+                <option value="Coimbatore">Coimbatore</option>
+                <option value="Chennai">Chennai</option>
+            </select>
+            <select id="filterType">
+                <option value="">Filter by Type</option>
+                <option value="electronics">Electronics</option>
+                <option value="batteries">Batteries</option>
+                <option value="circuitboards">Circuit Boards</option>
+            </select>
+        </div>
+        <div class="facility-list" id="facilityList">
+            <!-- Facility data will be dynamically added here -->
+        </div>
+        <div class="button-container">
+            <!-- Linking the buttons to the appropriate PHP files -->
+            <a href="login.html"><button>Back</button></a>
+            <a href="recycle.html"><button>Next</button></a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const Location = document.getElementById('Location');
+        const filterType = document.getElementById('filterType');
+        const facilityList = document.getElementById('facilityList');
+        
+
+        function filterFacilities() {
+            const selectedType = filterType.value.toLowerCase();
+            
+
+            // Switch case to determine which PHP file to redirect to
+            let redirectUrl;
+            switch (selectedType) {
+                case 'electronics':
+                    redirectUrl = 'electronics.php';
+                    break;
+                case 'batteries':
+                    redirectUrl = 'batteries.php';
+                    break;
+                case 'circuitboards':
+                    redirectUrl = 'circuitboards.php';
+                    break;
+                default:
+                    // Redirect to search.php if no valid option is selected
+                    redirectUrl = 'search.html';
+            }
+            
+            
+
+            // Redirect to the selected PHP file
+            window.location.href = redirectUrl;
+        }
+        filterType.addEventListener('change', filterFacilities);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Station Signup</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            background-image: url("space.jpg");
+        }
+
+        .container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background-color: #ddd;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* Fix overflow issue */
+        }
+
+        .station {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            padding: 20px;
+            z-index: 1; /* Ensure form is on top */
+        }
+
+        .station h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: rgb(106, 78, 198);
+        }
+
+        .station p {
+            font-size: 1.2em;
+            color: #232222;
+        }
+
+        .input-field {
+            margin-bottom: 15px;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            /* Remove outline on focus for cleaner look */
+            outline: none;
+        }
+
+        .input-field input:focus {
+            border-color: #14c54c; /* Change border color on focus */
+        }
+
+        button {
+            background-color: #14c54c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #0067cc;
+        }
+
+        .space {
+            position: absolute;
+            width: 120%; /* Increase size to cover container */
+            height: 120%; /* Increase size to cover container */
+            border-radius: 50%;
+            background-image: url("back.jpg"); /* Replace with your space background image */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            animation: rotate 20s linear infinite;
+            z-index: 0; /* Ensure space background is behind the form */
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="station">
+        <h1>Welcome!</h1>
+        <p>Sign up to create your account</p>
+        <form id="signupForm" action="signup.php" method="POST">
+            <div class="input-field">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <div class="space"></div>
+</div>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Password validation
+      var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        alert("Password must contain at least 8 characters including one uppercase letter, one lowercase letter, one number, and one special character.");
+        return;
+      }
+
+      // Here you would typically perform login authentication
+      var isAuthenticated = true;
+
+      if (isAuthenticated) {
+        window.location.href = "signup.php"; // Redirect to home page
+      } else {
+        alert("Login failed. Please check your credentials.");
+      }
+    });
+  </script>
+</body>
+</html>
