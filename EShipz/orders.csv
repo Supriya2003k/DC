@@ -1,0 +1,13 @@
+status,orderID,shipper,product,AWBNumber,shippedVia,shipmentDate,expectedDelivery,actualDelivery,actions
+close,EZTRACK964565556,person,White Goods,234501450,BLUEDART,2025-08-27T18:20:00Z,2023-12-04T00:00:00Z,,auto_awesome_motion
+cancelled,EZTRACK732144572,person,White Goods,234501449,BLUEDART,2025-08-26T18:20:00Z,2024-03-31T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
+PickedUp,EZTRACK732144572,person,White Goods,234501449,BLUEDART,2025-08-26T18:20:00Z,2024-03-31T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
+close,EZTRACK964565557,person,Electronics,234501451,UPS,2025-08-28T18:20:00Z,2023-12-05T00:00:00Z,,auto_awesome_motion
+cancelled,EZTRACK732144573,person,Electronics,234501450,UPS,2025-08-27T18:20:00Z,2024-04-01T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
+PickedUp,EZTRACK732144574,person,Electronics,234501451,UPS,2025-08-27T18:20:00Z,2024-04-01T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
+close,EZTRACK964565558,person,Books,234501452,FedEx,2025-08-29T18:20:00Z,2023-12-06T00:00:00Z,,auto_awesome_motion
+cancelled,EZTRACK732144574,person,Books,234501452,FedEx,2025-08-28T18:20:00Z,2024-04-02T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
+PickedUp,EZTRACK732144575,person,Books,234501452,FedEx,2025-08-28T18:20:00Z,2024-04-02T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
+close,EZTRACK964565559,person,Toys,234501453,DHL,2025-08-30T18:20:00Z,2023-12-07T00:00:00Z,,auto_awesome_motion
+cancelled,EZTRACK732144575,person,Toys,234501453,DHL,2025-08-29T18:20:00Z,2024-04-03T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
+PickedUp,EZTRACK732144576,person,Toys,234501453,DHL,2025-08-29T18:20:00Z,2024-04-03T00:00:00Z,,cancelassignmentschedulereceiptnotereceipt_longfile_downloadfact_checkauto_awesome_
